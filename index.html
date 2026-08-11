@@ -152,13 +152,12 @@
     /* video */
     .video-card{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);position:relative;}
     .video-frame{width:100%;aspect-ratio:16/9;background:linear-gradient(160deg,#3C5570 0%,#16324B 55%,#0A1727 100%);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;}
-    .play-btn{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,0.96);display:flex;align-items:center;justify-content:center;transition:transform .18s ease;}
-    .video-frame:hover .play-btn{transform:scale(1.08);}
-    .play-btn:after{content:"";border-style:solid;border-width:13px 0 13px 21px;border-color:transparent transparent transparent var(--navy);margin-left:5px;}
-    .video-duration{position:absolute;bottom:16px;right:18px;background:rgba(10,23,39,0.75);color:#fff;font-size:12px;letter-spacing:.3px;padding:5px 10px;border-radius:999px;}
-    .video-label{position:absolute;top:16px;left:18px;background:var(--teal);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;padding:5px 12px;text-transform:uppercase;border-radius:999px;}
-    .caption{font-size:13.5px;color:var(--ink-soft);padding:18px 4px 0;max-width:640px;}
-    .caption b{color:var(--ink);}
+    .video-frame iframe {
+      position:absolute; top:0; left:0; width:100%; height:100%; border:none;
+      pointer-events: auto;
+    }
+    .video-duration{position:absolute;bottom:16px;right:18px;background:rgba(10,23,39,0.75);color:#fff;font-size:12px;letter-spacing:.3px;padding:5px 10px;border-radius:999px; z-index:2; pointer-events:none;}
+    .video-label{position:absolute;top:16px;left:18px;background:var(--teal);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;padding:5px 12px;text-transform:uppercase;border-radius:999px; z-index:2; pointer-events:none;}
 
     /* pullquote */
     .pullquote{background:var(--teal-tint);border-radius:var(--radius);padding:52px 48px;text-align:center;}
@@ -291,34 +290,6 @@
       .reveal{opacity:1;transform:none;transition:none;}
       .traj-path,.traj-fill,.traj-dot,.traj-note{animation:none;opacity:1;stroke-dashoffset:0;}
     }
-
-    /* video overlay */
-    .video-overlay {
-      position: fixed; top:0; left:0; width:100%; height:100%;
-      background: rgba(0,0,0,0.7);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 999; opacity:0; pointer-events:none;
-      transition: opacity 0.25s ease;
-    }
-    .video-overlay.active { opacity:1; pointer-events:auto; }
-    .video-overlay .modal {
-      background: #000; border-radius: 20px; max-width: 900px; width: 94%;
-      position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-      overflow: hidden;
-    }
-    .video-overlay .modal video {
-      display: block; width:100%; height: auto; aspect-ratio: 16/9;
-      background: #000;
-    }
-    .video-overlay .close-btn {
-      position: absolute; top: 16px; right: 20px;
-      background: rgba(255,255,255,0.9); border: none;
-      font-size: 24px; width: 44px; height: 44px;
-      border-radius: 50%; font-weight: 300; cursor: pointer;
-      transition: 0.15s; color: #111;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .video-overlay .close-btn:hover { background: #fff; transform: scale(1.04); }
   </style>
 </head>
 <body>
@@ -400,13 +371,18 @@
 
   <section class="block wrap" id="risk">
     <div class="video-card reveal">
-      <div class="video-frame video-trigger" data-video="helfy.mp4">
+      <div class="video-frame">
         <div class="video-label">Watch</div>
-        <div class="play-btn"></div>
         <div class="video-duration">2:14</div>
+        <iframe 
+          src="https://streamable.com/e/yk43jz?autoplay=1&loop=1&muted=1" 
+          frameborder="0" 
+          allowfullscreen 
+          allow="autoplay; encrypted-media"
+          loading="lazy">
+        </iframe>
       </div>
     </div>
-    <div class="caption reveal"><b>Inside the investigation:</b> what a helfy® day actually looks like, from the first blood draw to the doctor sitting across the table with your plan. <i>— helfy® Clinical Team</i></div>
   </section>
 
   <section class="block wrap">
@@ -597,17 +573,6 @@
   </div>
 </footer>
 
-<!-- Video overlay -->
-<div class="video-overlay" id="videoOverlay">
-  <div class="modal">
-    <button class="close-btn" id="closeVideo">&times;</button>
-    <video id="videoPlayer" controls autoplay>
-      <source src="helfy.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-</div>
-
 <script>
   (function() {
     // ---- SCROLL REVEAL ----
@@ -666,42 +631,9 @@
       });
     });
 
-    // ---- VIDEO OVERLAY ----
-    const overlay = document.getElementById('videoOverlay');
-    const videoPlayer = document.getElementById('videoPlayer');
-    const closeBtn = document.getElementById('closeVideo');
-
-    function openVideo(src) {
-      videoPlayer.src = src;
-      videoPlayer.load();
-      overlay.classList.add('active');
-      videoPlayer.play().catch(()=>{});
-    }
-
-    function closeVideoFn() {
-      overlay.classList.remove('active');
-      videoPlayer.pause();
-      videoPlayer.src = ''; // unload
-    }
-
-    // triggers: any .video-trigger
-    document.querySelectorAll('.video-trigger').forEach(el => {
-      el.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const src = this.getAttribute('data-video') || 'helfy.mp4';
-        openVideo(src);
-      });
-    });
-
-    closeBtn.addEventListener('click', closeVideoFn);
-    overlay.addEventListener('click', function(e) {
-      if(e.target === overlay) closeVideoFn();
-    });
-
-    // ---- BOOKING TRIGGER (functional) ----
+    // ---- BOOKING TRIGGER ----
     function handleBooking(message) {
       alert('🔬 helfy® booking initiated' + (message ? ' — ' + message : ''));
-      // In production: open Calendly / booking widget
     }
 
     document.querySelectorAll('.booking-trigger').forEach(btn => {
@@ -712,13 +644,12 @@
       });
     });
 
-    // also catch any nav CTA that might have been missed
     document.querySelector('.nav-cta .btn-primary')?.addEventListener('click', function(e) {
       e.stopPropagation();
       handleBooking('Navigation');
     });
 
-    // ---- NEWSLETTER SUBMIT ----
+    // ---- NEWSLETTER ----
     document.querySelector('.newsletter form')?.addEventListener('submit', function(e) {
       e.preventDefault();
       const input = this.querySelector('input[type="email"]');
@@ -730,10 +661,7 @@
       }
     });
 
-    // ---- "Watch the film" in hero also triggers video ----
-    // Already covered by .video-trigger
-
-    console.log('helfy® — buttons functional, video overlay ready (helfy.mp4)');
+    console.log('helfy® — video autoplay + loop, play button removed.');
   })();
 </script>
 
