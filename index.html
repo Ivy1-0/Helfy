@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,277 +7,492 @@
 <title>helfy® — Your next 12 months, written by a doctor.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#14294B;
-    --navy-deep:#0C1A30;
-    --blue:#2B5C8A;
-    --blue-pale:#EAF0F6;
-    --paper:#FBFAF7;
-    --white:#FFFFFF;
-    --ink:#1A1A1A;
-    --ink-soft:#4A4A48;
-    --rule:#CFCDC2;
-    --rule-strong:#14294B;
+    --navy:#0F2138;        /* headline / dark surfaces */
+    --navy-deep:#0A1727;   /* deepest surface */
+    --teal:#167E77;        /* primary brand accent */
+    --teal-deep:#0F5F5A;   /* accent hover */
+    --teal-tint:#E7F3F1;   /* tinted section bg */
+    --paper:#FFFFFF;
+    --mist:#F6F8F8;
+    --ink:#16202B;
+    --ink-soft:#5C6B76;
+    --line:#E4E9EA;
+    --radius:20px;
+    --radius-sm:12px;
+    --shadow:0 18px 40px rgba(15,33,56,0.08);
+    --shadow-lg:0 24px 60px rgba(15,33,56,0.16);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'PT Serif', Georgia, serif;
-    line-height:1.65;
-  }
-  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
-  a{color:var(--blue);}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;color:var(--navy);letter-spacing:-0.02em;}
+  img{max-width:100%;display:block;}
+  button{font-family:'Inter',sans-serif;}
 
-  /* Top strip */
-  .topstrip{background:var(--navy);color:#DCE4EE;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.6px;padding:7px 0;}
-  .topstrip .wrap{display:flex;justify-content:space-between;align-items:center;}
-  .topstrip .tag{color:#8FAFD1;font-weight:600;}
+  /* Scroll-reveal */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1);}
+  .reveal.visible{opacity:1;transform:translateY(0);}
 
-  /* Masthead */
-  .masthead{padding:34px 0 18px;text-align:center;border-bottom:3px double var(--rule-strong);}
-  .masthead .kicker{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;color:var(--blue);font-weight:600;margin-bottom:10px;}
-  .masthead h1{
-    font-family:'Playfair Display',serif;
-    font-weight:900;
-    font-size:64px;
-    letter-spacing:-1px;
-    color:var(--navy);
-  }
-  .masthead h1 sup{font-size:22px;top:-0.6em;}
-  .masthead .dateline{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:1px;color:var(--ink-soft);margin-top:10px;text-transform:uppercase;}
+  /* Announcement bar */
+  .topstrip{background:var(--navy);color:#CBD9E2;font-size:12.5px;padding:9px 0;}
+  .topstrip .wrap{display:flex;justify-content:center;gap:10px;align-items:center;text-align:center;flex-wrap:wrap;}
+  .topstrip .dot{width:6px;height:6px;border-radius:50%;background:#3EC9BB;flex:0 0 auto;}
+  .topstrip b{color:#fff;font-weight:600;}
 
-  /* Section nav rule */
-  .navline{border-bottom:1px solid var(--rule);padding:10px 0;font-family:'Inter',sans-serif;font-size:11.5px;letter-spacing:1.2px;color:var(--navy);text-align:center;font-weight:600;}
-  .navline span{margin:0 14px;}
+  /* Nav */
+  .navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:box-shadow .25s ease,border-color .25s ease;}
+  .navbar.stuck{box-shadow:0 6px 24px rgba(15,33,56,0.08);border-color:var(--line);}
+  .navbar .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:var(--navy);display:flex;align-items:center;gap:2px;letter-spacing:-0.02em;}
+  .logo sup{font-size:11px;top:-0.9em;color:var(--teal);}
+  .navlinks{display:flex;align-items:center;gap:30px;list-style:none;}
+  .navlinks a{color:var(--navy);text-decoration:none;font-size:14.5px;font-weight:500;transition:color .15s ease;}
+  .navlinks a:hover{color:var(--teal);}
+  .nav-cta{display:flex;align-items:center;gap:18px;}
+  .navbar .btn-primary{padding:11px 22px;font-size:13.5px;}
+  .menu-toggle{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-toggle span{width:22px;height:2px;background:var(--navy);border-radius:2px;transition:transform .2s ease,opacity .2s ease;}
+  .mobile-menu{display:none;}
+
+  /* Buttons */
+  .btn-primary{background:var(--teal);color:#fff;font-weight:600;font-size:14.5px;border:none;border-radius:999px;padding:16px 30px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;box-shadow:0 10px 24px rgba(22,126,119,0.28);}
+  .btn-primary:hover{transform:translateY(-2px);background:var(--teal-deep);box-shadow:0 14px 30px rgba(22,126,119,0.36);}
+  .btn-secondary{background:transparent;color:var(--navy);font-weight:600;font-size:14.5px;border:1.5px solid var(--line);border-radius:999px;padding:15.5px 28px;cursor:pointer;transition:border-color .15s ease,background .15s ease;}
+  .btn-secondary:hover{border-color:var(--navy);background:var(--mist);}
+  .btn-light{background:#fff;color:var(--navy);font-weight:700;border:none;border-radius:999px;padding:17px 34px;font-size:14.5px;cursor:pointer;transition:transform .15s ease;}
+  .btn-light:hover{transform:translateY(-2px);}
 
   /* Hero */
-  .hero{padding:46px 0 10px;}
-  .hero .eyebrow{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:1.5px;color:#B0472E;font-weight:700;margin-bottom:14px;}
-  .hero h2{
-    font-family:'Playfair Display',serif;
-    font-weight:700;
-    font-size:46px;
-    line-height:1.12;
-    color:var(--navy-deep);
-    max-width:760px;
-    margin-bottom:18px;
-  }
-  .hero .dek{font-size:19px;color:var(--ink-soft);max-width:600px;margin-bottom:8px;font-style:italic;}
-  .byline{font-family:'Inter',sans-serif;font-size:12px;color:var(--ink-soft);margin:16px 0 28px;letter-spacing:0.2px;}
+  .hero{padding:76px 0 40px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--teal-tint);color:var(--teal-deep);font-size:12.5px;font-weight:600;letter-spacing:.3px;padding:7px 14px 7px 10px;border-radius:999px;margin-bottom:22px;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);}
+  .hero h1{font-size:52px;line-height:1.08;font-weight:700;margin-bottom:20px;}
+  .hero h1 .accent{color:var(--teal);}
+  .hero .dek{font-size:18px;color:var(--ink-soft);max-width:480px;margin-bottom:28px;}
+  .byline{font-size:13px;color:var(--ink-soft);margin-bottom:30px;}
   .byline b{color:var(--ink);}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
 
-  .hero-photo{
-    width:100%;height:340px;background:linear-gradient(180deg,#5C6572 0%,#2E343D 60%,#14171B 100%);
-    border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);
-    display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:8px;
-  }
-  .hero-photo svg{opacity:0.55;}
-  .caption{font-family:'Inter',sans-serif;font-size:11px;color:var(--ink-soft);padding:8px 0 30px;border-bottom:1px solid var(--rule);}
+  /* Hero trajectory graphic */
+  .hero-visual{position:relative;background:linear-gradient(160deg,#123049 0%,#0A1727 100%);border-radius:28px;padding:34px 30px 26px;box-shadow:var(--shadow-lg);}
+  .hero-visual .label{display:flex;justify-content:space-between;align-items:center;color:#8CA9B9;font-size:12px;font-weight:600;letter-spacing:.4px;margin-bottom:18px;text-transform:uppercase;}
+  .hero-visual .label b{color:#fff;font-weight:700;}
+  .traj-line{width:100%;height:auto;}
+  .traj-path{fill:none;stroke:#3EC9BB;stroke-width:3;stroke-linecap:round;stroke-dasharray:520;stroke-dashoffset:520;animation:draw 1.8s 0.4s cubic-bezier(.3,.7,.3,1) forwards;}
+  .traj-fill{opacity:0;animation:fadein 1s 1.6s ease forwards;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @keyframes fadein{to{opacity:1;}}
+  .traj-dot{opacity:0;animation:fadein 0.5s 1.9s ease forwards;}
+  .traj-note{position:absolute;background:#fff;border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);opacity:0;animation:fadein 0.6s 2.1s ease forwards;}
+  .traj-note .t{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--navy);}
+  .traj-note .s{font-size:11.5px;color:var(--ink-soft);}
+  .traj-note-1{top:44%;right:8%;}
+  .traj-legend{display:flex;gap:22px;margin-top:16px;}
+  .traj-legend span{font-size:11.5px;color:#8CA9B9;display:flex;align-items:center;gap:6px;}
+  .traj-legend i{width:10px;height:10px;border-radius:3px;background:#3EC9BB;display:inline-block;}
+  .traj-legend i.o{background:#3C5570;}
+
+  /* Stats band */
+  .statband{background:var(--navy);padding:0 0 0;margin-top:64px;}
+  .statband .grid{display:grid;grid-template-columns:repeat(4,1fr);}
+  .statband .cell{padding:36px 20px;text-align:center;border-left:1px solid rgba(255,255,255,0.08);}
+  .statband .cell:first-child{border-left:none;}
+  .statband .num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;color:#fff;}
+  .statband .lbl{font-size:12.5px;color:#93ABBB;margin-top:6px;letter-spacing:.2px;}
+
+  /* Section scaffolding */
+  section.block{padding:88px 0;}
+  .section-tag{display:inline-flex;align-items:center;gap:8px;color:var(--teal-deep);font-size:12.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px;}
+  .section-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);}
+  .section-head{font-size:34px;font-weight:700;margin-bottom:14px;max-width:640px;}
+  .section-sub{font-size:16px;color:var(--ink-soft);max-width:560px;margin-bottom:48px;}
+  .center{text-align:center;margin-left:auto;margin-right:auto;}
+
+  /* Video module */
+  .video-card{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);position:relative;}
+  .video-frame{width:100%;aspect-ratio:16/9;background:linear-gradient(160deg,#3C5570 0%,#16324B 55%,#0A1727 100%);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .play-btn{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,0.96);display:flex;align-items:center;justify-content:center;transition:transform .18s ease;}
+  .video-frame:hover .play-btn{transform:scale(1.08);}
+  .play-btn:after{content:"";border-style:solid;border-width:13px 0 13px 21px;border-color:transparent transparent transparent var(--navy);margin-left:5px;}
+  .video-duration{position:absolute;bottom:16px;right:18px;background:rgba(10,23,39,0.75);color:#fff;font-size:12px;letter-spacing:.3px;padding:5px 10px;border-radius:999px;}
+  .video-label{position:absolute;top:16px;left:18px;background:var(--teal);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;padding:5px 12px;text-transform:uppercase;border-radius:999px;}
+  .caption{font-size:13.5px;color:var(--ink-soft);padding:18px 4px 0;max-width:640px;}
   .caption b{color:var(--ink);}
 
-  .cta-row{display:flex;gap:12px;margin:0 0 8px;flex-wrap:wrap;}
-  .btn-primary{background:var(--navy);color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;letter-spacing:0.3px;border:none;padding:14px 26px;cursor:pointer;}
-  .btn-secondary{background:transparent;color:var(--navy);font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;letter-spacing:0.3px;border:1px solid var(--navy);padding:14px 26px;cursor:pointer;}
+  /* Pullquote */
+  .pullquote{background:var(--teal-tint);border-radius:var(--radius);padding:52px 48px;text-align:center;}
+  .pullquote p{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:25px;line-height:1.4;color:var(--navy);max-width:680px;margin:0 auto;}
+  .pullquote .attr{display:block;font-family:'Inter',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:.3px;color:var(--teal-deep);margin-top:18px;text-transform:uppercase;}
 
-  /* Pull quote */
-  .pullquote{
-    padding:44px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
-    font-family:'Playfair Display',serif;font-style:italic;font-size:26px;line-height:1.4;color:var(--navy-deep);text-align:center;max-width:680px;margin:0 auto;
-  }
-  .pullquote .attr{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:11px;letter-spacing:1px;color:var(--ink-soft);margin-top:16px;text-transform:uppercase;}
-
-  /* Section label */
-  .section-label{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;color:var(--blue);font-weight:700;text-transform:uppercase;padding:40px 0 8px;border-top:3px double var(--rule-strong);margin-top:10px;}
-  .section-head{font-family:'Playfair Display',serif;font-weight:700;font-size:30px;color:var(--navy-deep);margin-bottom:22px;}
-
-  /* Offer table */
-  .offers{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule-strong);margin-bottom:40px;}
-  .offer{padding:26px 24px;border-left:1px solid var(--rule);}
-  .offer:first-child{border-left:none;}
-  .offer.featured{background:var(--blue-pale);}
-  .offer .ed{font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:1.5px;color:var(--blue);font-weight:700;text-transform:uppercase;margin-bottom:8px;}
-  .offer h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy-deep);margin-bottom:6px;}
-  .offer .price{font-family:'Inter',sans-serif;font-size:26px;font-weight:700;color:var(--navy);margin-bottom:16px;}
-  .offer ul{list-style:none;font-family:'PT Serif',serif;font-size:14px;color:var(--ink-soft);}
-  .offer li{padding:5px 0 5px 16px;position:relative;border-top:1px solid var(--rule);}
+  /* Offers */
+  .offers{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .offer{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;transition:transform .2s ease,box-shadow .2s ease;}
+  .offer:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+  .offer.featured{background:var(--navy);border-color:var(--navy);}
+  .offer .ed{font-size:11.5px;letter-spacing:1.3px;color:var(--teal-deep);font-weight:700;text-transform:uppercase;margin-bottom:10px;}
+  .offer.featured .ed{color:#3EC9BB;}
+  .offer h3{font-size:23px;margin-bottom:6px;}
+  .offer.featured h3{color:#fff;}
+  .offer .price{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:var(--navy);margin-bottom:22px;}
+  .offer.featured .price{color:#fff;}
+  .offer ul{list-style:none;font-size:14.5px;color:var(--ink-soft);}
+  .offer.featured ul{color:#B9CBD6;}
+  .offer li{padding:10px 0 10px 26px;position:relative;border-top:1px solid var(--line);}
+  .offer.featured li{border-top:1px solid rgba(255,255,255,0.1);}
   .offer li:first-child{border-top:none;}
-  .offer li:before{content:"—";position:absolute;left:0;color:var(--blue);}
-  .offer .best{font-family:'Inter',sans-serif;font-size:11px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  .offer li:before{content:"";position:absolute;left:0;top:14px;width:14px;height:14px;border-radius:50%;background:var(--teal-tint);}
+  .offer li:after{content:"";position:absolute;left:4px;top:18px;width:6px;height:3px;border-left:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:rotate(-45deg);}
+  .offer.featured li:before{background:rgba(62,201,187,0.15);}
+  .offer.featured li:after{border-color:#3EC9BB;}
+  .offer-cta{width:100%;margin-top:24px;}
 
-  /* Op-ed with drop cap */
-  .oped{padding:6px 0 40px;max-width:680px;}
-  .oped p{font-size:16.5px;color:var(--ink);margin-bottom:16px;}
-  .oped p:first-child:first-letter{
-    font-family:'Playfair Display',serif;font-weight:900;font-size:64px;line-height:0.8;float:left;
-    padding:6px 8px 0 0;color:var(--navy);
-  }
+  /* Why a doctor — icon list */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+  .why-copy p{font-size:16.5px;color:var(--ink-soft);margin-bottom:18px;max-width:480px;}
+  .why-points{display:flex;flex-direction:column;gap:22px;}
+  .point{display:flex;gap:16px;padding:22px;border-radius:var(--radius-sm);background:var(--mist);}
+  .point .icon{flex:0 0 auto;width:42px;height:42px;border-radius:12px;background:var(--teal);display:flex;align-items:center;justify-content:center;}
+  .point h4{font-size:16px;margin-bottom:5px;}
+  .point p{font-size:14px;color:var(--ink-soft);}
 
-  /* Letters / objections */
-  .letters{padding:6px 0 40px;}
-  .letter{border-top:1px solid var(--rule);padding:22px 0;}
-  .letter:last-child{border-bottom:1px solid var(--rule);}
-  .letter .q{font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:var(--navy-deep);margin-bottom:8px;}
-  .letter .q:before{content:"\201C";color:var(--blue);}
-  .letter .a{font-size:15px;color:var(--ink-soft);max-width:600px;}
+  /* FAQ */
+  .faq-item{border-bottom:1px solid var(--line);padding:24px 4px;cursor:pointer;}
+  .faq-item:first-child{border-top:1px solid var(--line);}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16.5px;color:var(--navy);}
+  .faq-q .plus{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--teal-tint);color:var(--teal-deep);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:400;transition:transform .2s ease,background .2s ease;}
+  .faq-item.open .faq-q .plus{transform:rotate(45deg);background:var(--teal);color:#fff;}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-item.open .faq-a{max-height:220px;}
+  .faq-a p{padding-top:14px;font-size:15px;color:var(--ink-soft);max-width:620px;}
 
-  /* Newsletter box */
-  .newsletter{background:var(--navy);color:#fff;padding:36px 32px;margin:44px 0;}
-  .newsletter .kicker{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:1.5px;color:#8FAFD1;font-weight:700;text-transform:uppercase;margin-bottom:10px;}
-  .newsletter h3{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:8px;}
-  .newsletter p{font-size:14px;color:#C6D1E0;margin-bottom:18px;max-width:480px;}
+  /* Marquee */
+  .marquee-wrap{overflow:hidden;background:var(--teal-tint);padding:20px 0;}
+  .marquee-track{display:flex;gap:0;width:max-content;animation:scrollmq 24s linear infinite;}
+  .marquee-track span{font-size:13.5px;letter-spacing:.4px;color:var(--teal-deep);font-weight:600;white-space:nowrap;padding:0 28px;position:relative;}
+  .marquee-track span:after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--teal);}
+  @keyframes scrollmq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* Newsletter */
+  .newsletter{background:linear-gradient(135deg,#123049 0%,#0A1727 100%);color:#fff;border-radius:var(--radius);padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;}
+  .newsletter .tagline{font-size:11.5px;font-weight:700;letter-spacing:1.2px;color:#3EC9BB;text-transform:uppercase;margin-bottom:12px;}
+  .newsletter h3{color:#fff;font-size:24px;margin-bottom:10px;}
+  .newsletter p{font-size:14.5px;color:#B9CBD6;max-width:420px;}
   .newsletter form{display:flex;gap:10px;flex-wrap:wrap;}
-  .newsletter input{flex:1;min-width:220px;padding:12px 14px;border:1px solid #3C5578;background:#1B3457;color:#fff;font-family:'Inter',sans-serif;font-size:13px;}
-  .newsletter input::placeholder{color:#8FA6C4;}
-  .newsletter button{background:#fff;color:var(--navy);border:none;padding:12px 22px;font-family:'Inter',sans-serif;font-weight:700;font-size:13px;cursor:pointer;}
+  .newsletter input{flex:1;min-width:200px;padding:14px 16px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:#fff;font-size:13.5px;border-radius:999px;}
+  .newsletter input::placeholder{color:#8CA9B9;}
+  .newsletter button{background:#fff;color:var(--navy);border:none;padding:14px 24px;font-weight:700;font-size:13.5px;cursor:pointer;border-radius:999px;transition:transform .15s ease;white-space:nowrap;}
+  .newsletter button:hover{transform:translateY(-2px);}
 
-  /* Final CTA banner */
-  .finalcta{background:var(--navy-deep);color:#fff;text-align:center;padding:52px 24px;}
-  .finalcta .eyebrow{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;color:#8FAFD1;font-weight:700;margin-bottom:12px;text-transform:uppercase;}
-  .finalcta h2{font-family:'Playfair Display',serif;font-size:32px;margin-bottom:10px;}
-  .finalcta p{font-family:'PT Serif',serif;font-size:15px;color:#C6D1E0;margin-bottom:24px;}
-  .finalcta button{background:#fff;color:var(--navy-deep);border:none;padding:16px 34px;font-family:'Inter',sans-serif;font-weight:700;font-size:14px;cursor:pointer;letter-spacing:0.3px;}
-  .finalcta .sub{font-family:'Inter',sans-serif;font-size:11px;color:#7C93B4;margin-top:14px;}
+  /* Final CTA */
+  .finalcta{background:var(--navy);color:#fff;text-align:center;padding:88px 24px;position:relative;overflow:hidden;}
+  .finalcta:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(62,201,187,0.16),transparent 60%);}
+  .finalcta .inner{position:relative;}
+  .finalcta .eyebrow{background:rgba(62,201,187,0.14);color:#3EC9BB;}
+  .finalcta h2{color:#fff;font-size:36px;margin-bottom:14px;}
+  .finalcta p{font-size:16px;color:#B9CBD6;margin-bottom:30px;max-width:480px;margin-left:auto;margin-right:auto;}
+  .finalcta .sub{font-size:12.5px;color:#7C93B4;margin-top:18px;}
 
-  /* Footer */
-  footer{padding:24px 0 50px;border-top:1px solid var(--rule);font-family:'Inter',sans-serif;font-size:11px;color:var(--ink-soft);text-align:center;}
-  footer .disclaimer{max-width:560px;margin:0 auto 10px;}
+  footer{padding:40px 0 60px;font-size:12.5px;color:var(--ink-soft);text-align:center;}
+  footer .disclaimer{max-width:560px;margin:0 auto 14px;}
+  footer .fmark{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--navy);margin-bottom:8px;font-size:16px;}
 
+  /* ===================== MOBILE ===================== */
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr;gap:40px;}
+    .hero-visual{order:-1;}
+    .why-grid{grid-template-columns:1fr;gap:34px;}
+    .newsletter{grid-template-columns:1fr;}
+  }
   @media (max-width:700px){
-    .masthead h1{font-size:42px;}
-    .hero h2{font-size:32px;}
+    .wrap{padding:0 20px;}
+    .navlinks{position:fixed;top:64px;left:0;right:0;background:#fff;flex-direction:column;align-items:flex-start;gap:0;padding:8px 20px 18px;box-shadow:0 16px 30px rgba(15,33,56,0.1);border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .25s ease;}
+    .navlinks.open{max-height:320px;}
+    .navlinks li{width:100%;}
+    .navlinks a{display:block;padding:12px 0;border-bottom:1px solid var(--line);width:100%;}
+    .nav-cta .btn-primary{padding:9px 16px;font-size:12.5px;}
+    .menu-toggle{display:flex;}
+    .menu-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+    .menu-toggle.open span:nth-child(2){opacity:0;}
+    .menu-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+    .hero{padding:40px 0 30px;}
+    .hero h1{font-size:34px;}
+    .hero .dek{font-size:16px;}
+    .cta-row{flex-direction:column;}
+    .cta-row button{width:100%;}
+    .hero-visual{padding:24px 18px 20px;border-radius:20px;}
+    .traj-note{padding:10px 12px;}
+    .traj-note-1{right:4%;}
+
+    .statband{margin-top:44px;}
+    .statband .grid{grid-template-columns:1fr 1fr;}
+    .statband .cell{padding:24px 12px;}
+    .statband .cell:nth-child(3){border-left:none;}
+    .statband .num{font-size:26px;}
+
+    section.block{padding:56px 0;}
+    .section-head{font-size:26px;}
+    .section-sub{margin-bottom:34px;}
+
+    .pullquote{padding:34px 24px;}
+    .pullquote p{font-size:19px;}
+
     .offers{grid-template-columns:1fr;}
-    .offer{border-left:none;border-top:1px solid var(--rule);}
-    .offer:first-child{border-top:none;}
-    .navline span{display:inline-block;margin:2px 8px;}
-    .pullquote{font-size:20px;}
+
+    .newsletter{padding:30px 24px;}
+
+    .finalcta{padding:60px 20px;}
+    .finalcta h2{font-size:27px;}
+    .finalcta button{width:100%;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{animation:none;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .traj-path,.traj-fill,.traj-dot,.traj-note{animation:none;opacity:1;stroke-dashoffset:0;}
   }
 </style>
 </head>
 <body>
 
-<div class="topstrip">
-  <div class="wrap">
-    <span>LATE EDITION — TODAY, DRY, HIGH 24°C</span>
-    <span class="tag">NEVER GUESS®</span>
-  </div>
-</div>
+<div class="topstrip"><div class="wrap"><span class="dot"></span>Testing available this week — <b>results reviewed by a doctor in 5 days</b></div></div>
 
-<header class="masthead">
-  <div class="kicker">A SPECIAL HEALTH REPORT</div>
-  <h1>helfy<sup>®</sup></h1>
-  <div class="dateline">Tuesday, 11 August 2026 · Advanced Testing Edition</div>
+<header class="navbar" id="navbar">
+  <div class="wrap">
+    <div class="logo">helfy<sup>®</sup></div>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#risk">Risk</a></li>
+      <li><a href="#offer">The Test</a></li>
+      <li><a href="#doctor">The Doctor</a></li>
+      <li><a href="#faq">Questions</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="btn-primary">Book your test</button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
 </header>
 
-<nav class="navline">
-  <span>RISK</span><span>TRAJECTORY</span><span>THE TEST</span><span>THE DOCTOR</span><span>THE PLAN</span>
-</nav>
+<main>
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <div class="eyebrow"><span class="dot"></span>Never Guess®</div>
+        <h1>Your next 12 months,<br>written by a <span class="accent">doctor.</span></h1>
+        <p class="dek">Advanced testing, a real GMC-registered doctor, and a plan — not a PDF. So you never have to guess your health again.</p>
+        <div class="byline">By the <b>helfy® Clinical Team</b> · Reviewed by a GMC-registered physician · 6 min read</div>
+        <div class="cta-row">
+          <button class="btn-primary">Book your helfy® Test</button>
+          <button class="btn-secondary">Watch the film ↓</button>
+        </div>
+      </div>
 
-<main class="wrap">
-
-  <section class="hero">
-    <div class="eyebrow">FRONT PAGE</div>
-    <h2>Your next 12 months,<br>written by a doctor.</h2>
-    <p class="dek">Advanced testing. A real GMC-registered doctor. A plan — not a PDF. So you never have to guess your health again.</p>
-    <div class="byline">By the <b>helfy® Clinical Team</b> · Reviewed by a GMC-registered physician · 6 min read</div>
-
-    <div class="hero-photo">
-      <svg width="130" height="190" viewBox="0 0 130 190">
-        <ellipse cx="65" cy="36" rx="20" ry="24" fill="#0C0E11"/>
-        <path d="M38 122 Q40 84 65 82 Q90 84 92 122 L92 185 L38 185 Z" fill="#0C0E11"/>
-      </svg>
-    </div>
-    <div class="caption"><b>Photo:</b> A moment of reckoning — the instant a man stops guessing and starts asking the real questions. <i>helfy® archive</i></div>
-
-    <div class="cta-row" style="margin-top:28px;">
-      <button class="btn-primary">Book your helfy® Test — results in 5 days</button>
-      <button class="btn-secondary">Read the full report ↓</button>
+      <div class="hero-visual reveal">
+        <div class="label"><span>Your trajectory</span><b>12-month view</b></div>
+        <svg class="traj-line" viewBox="0 0 380 190" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="fillgrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3EC9BB" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#3EC9BB" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="traj-fill" d="M10,150 C60,155 90,120 130,118 C170,116 190,90 230,80 C270,70 300,45 370,20 L370,190 L10,190 Z" fill="url(#fillgrad)"/>
+          <path class="traj-path" d="M10,150 C60,155 90,120 130,118 C170,116 190,90 230,80 C270,70 300,45 370,20" />
+          <circle class="traj-dot" cx="130" cy="118" r="5" fill="#0A1727" stroke="#3EC9BB" stroke-width="2"/>
+          <circle class="traj-dot" cx="370" cy="20" r="5" fill="#3EC9BB"/>
+        </svg>
+        <div class="traj-note traj-note-1"><div class="t">Plan starts</div><div class="s">Doctor review, day 5</div></div>
+        <div class="traj-legend"><span><i></i>With a plan</span><span><i class="o"></i>Without</span></div>
+      </div>
     </div>
   </section>
 
-  <div class="pullquote">
-    “He wasn't chasing a personal best. He was calculating odds.”
-    <span class="attr">— On why men like David finally book the test</span>
-  </div>
-
-  <div class="section-label">The Offer</div>
-  <h3 class="section-head">Two editions. One trajectory, finally answered.</h3>
-  <div class="offers">
-    <div class="offer">
-      <div class="ed">Standard edition</div>
-      <h3>helfy® Test</h3>
-      <div class="price">£499</div>
-      <ul>
-        <li>Comprehensive blood test</li>
-        <li>Doctor-reviewed results in 5 days</li>
-        <li>Results explained in plain English</li>
-        <li>Personalised nutrition, supplement & lifestyle plan</li>
-        <li>Progress tracking in the helfy® app</li>
-      </ul>
-      <div class="best">Best for: peace of mind, and answers to changes you've noticed.</div>
+  <section class="statband reveal">
+    <div class="wrap grid">
+      <div class="cell"><div class="num" data-target="5" data-suffix=" days">0</div><div class="lbl">To reviewed results</div></div>
+      <div class="cell"><div class="num" data-target="100" data-suffix="%">0</div><div class="lbl">GMC-registered doctors</div></div>
+      <div class="cell"><div class="num" data-target="12" data-suffix=" mo">0</div><div class="lbl">Personalised plan</div></div>
+      <div class="cell"><div class="num">1:1</div><div class="lbl">Doctor consultation</div></div>
     </div>
-    <div class="offer featured">
-      <div class="ed">Complete edition</div>
-      <h3>helfy® Test + Scan</h3>
-      <div class="price">£1,399</div>
-      <ul>
-        <li>Everything in helfy® Test</li>
-        <li>Clinically assessed biological age</li>
-        <li>Advanced DEXA body composition scan</li>
-        <li>More doctor time</li>
-        <li>One plan built from bloods and scan together</li>
-      </ul>
-      <div class="best">Best for: the most complete picture of your health.</div>
+  </section>
+
+  <section class="block wrap" id="risk">
+    <div class="video-card reveal">
+      <div class="video-frame"><div class="video-label">Watch</div><div class="play-btn"></div><div class="video-duration">2:14</div></div>
+    </div>
+    <div class="caption reveal"><b>Inside the investigation:</b> what a helfy® day actually looks like, from the first blood draw to the doctor sitting across the table with your plan. <i>— helfy® Clinical Team</i></div>
+  </section>
+
+  <section class="block wrap">
+    <div class="pullquote reveal">
+      <p>"He wasn't chasing a personal best. He was calculating odds."</p>
+      <span class="attr">On why men like David finally book the test</span>
+    </div>
+  </section>
+
+  <section class="block wrap" id="offer">
+    <div class="section-tag reveal"><span class="dot"></span>The Offer</div>
+    <h2 class="section-head reveal">Two editions. One trajectory, finally answered.</h2>
+    <p class="section-sub reveal">Pick the depth that fits where you are — both start with a real doctor, not an algorithm.</p>
+    <div class="offers">
+      <div class="offer reveal">
+        <div class="ed">Standard edition</div><h3>helfy® Test</h3><div class="price">£499</div>
+        <ul>
+          <li>Comprehensive blood test</li>
+          <li>Doctor-reviewed results in 5 days</li>
+          <li>Results explained in plain English</li>
+          <li>Personalised nutrition & lifestyle plan</li>
+          <li>Progress tracking in the helfy® app</li>
+        </ul>
+        <button class="btn-secondary offer-cta">Choose Standard</button>
+      </div>
+      <div class="offer featured reveal">
+        <div class="ed">Complete edition</div><h3>helfy® Test + Scan</h3><div class="price">£1,399</div>
+        <ul>
+          <li>Everything in helfy® Test</li>
+          <li>Clinically assessed biological age</li>
+          <li>Advanced DEXA body composition scan</li>
+          <li>Extended doctor consultation</li>
+          <li>One plan built from bloods and scan together</li>
+        </ul>
+        <button class="btn-primary offer-cta">Choose Complete</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="doctor">
+    <div class="section-tag reveal"><span class="dot"></span>Editorial</div>
+    <h2 class="section-head reveal">Why a doctor, not a kit?</h2>
+    <div class="why-grid">
+      <div class="why-copy reveal">
+        <p>A home kit gives you numbers. It doesn't tell you what they mean, whether they matter, or what to do about them. It sits in a drawer — or a browser tab — unread and unactioned.</p>
+        <p>helfy® is the opposite. A named, GMC-registered doctor chooses your tests, reviews your results, explains them in plain English, and writes a plan built around your bloods — not a population average.</p>
+      </div>
+      <div class="why-points reveal">
+        <div class="point">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h4>Built around you</h4><p>Your GP's annual check is designed for a population, not for you.</p></div>
+        </div>
+        <div class="point">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h4>The gaps a checkup misses</h4><p>Age-appropriate testosterone, visceral fat, real cardiovascular risk — not the calculator version.</p></div>
+        </div>
+        <div class="point">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><h4>A plan, not a PDF</h4><p>A stack of numbers only matters once someone tells you what to do with them.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="faq">
+    <div class="section-tag reveal"><span class="dot"></span>Readers Ask</div>
+    <h2 class="section-head reveal">The questions you haven't said out loud</h2>
+    <div class="reveal">
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q"><span>My GP already does an annual check.</span><span class="plus">+</span></div>
+        <div class="faq-a"><p>A standard NHS check covers a baseline — cholesterol, blood sugar, blood pressure. It's not designed to catch visceral fat, age-appropriate testosterone, or an early pre-diabetic trend. helfy® fills exactly that gap, without replacing your GP.</p></div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q"><span>What if you find something I can't unfind?</span><span class="plus">+</span></div>
+        <div class="faq-a"><p>Finding it early is the entire point. You don't get handed a number and left to Google it — you get a doctor and a written plan to address it. The trajectory is almost always reversible when it's caught now, not in five years.</p></div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q"><span>Is this covered by my health cash plan?</span><span class="plus">+</span></div>
+        <div class="faq-a"><p>Most health cash plans reimburse helfy®. Almost nobody checks. We'll help you confirm your cover before you book — often the difference between "expensive" and "already paid for".</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap reveal">
+    <div class="marquee-track">
+      <span>GMC-Registered Doctors</span><span>DEXA Body Composition</span><span>Biological Age Assessment</span><span>Cash Plan Eligible</span><span>Results in 5 Days</span>
+      <span>GMC-Registered Doctors</span><span>DEXA Body Composition</span><span>Biological Age Assessment</span><span>Cash Plan Eligible</span><span>Results in 5 Days</span>
     </div>
   </div>
 
-  <div class="section-label">Editorial</div>
-  <h3 class="section-head">Why a doctor, not a kit?</h3>
-  <div class="oped">
-    <p>A home kit gives you numbers. It does not tell you what they mean, whether they matter, or what to do about them. It sits in a drawer, or a browser tab, unread and unactioned.</p>
-    <p>helfy® is the opposite of a home kit. A named, GMC-registered doctor chooses your tests, reviews your results, explains them in plain English, and writes a plan built specifically around your bloods — not a population average. That is the difference between a stack of numbers and an actual trajectory.</p>
-    <p>Your annual GP check is good. It's designed for a population, not for you. It won't tell you if your testosterone is age-appropriate, whether your weight gain is visceral, or what your real cardiovascular risk is — not the calculator version.</p>
-  </div>
-
-  <div class="section-label">Readers Ask</div>
-  <h3 class="section-head">The questions you haven't said out loud</h3>
-  <div class="letters">
-    <div class="letter">
-      <div class="q">"My GP already does an annual check."</div>
-      <div class="a">A standard NHS check covers a baseline — cholesterol, blood sugar, blood pressure. It's not designed to catch visceral fat, age-appropriate testosterone, or an early pre-diabetic trend. helfy® fills exactly that gap, without replacing your GP.</div>
+  <section class="block wrap">
+    <div class="newsletter reveal">
+      <div>
+        <div class="tagline">The Health Briefing</div>
+        <h3>The 5 numbers every 48-year-old man needs to know.</h3>
+        <p>A short, doctor-written brief on cardiovascular risk, visceral fat, testosterone, liver load and biological age — sent straight to your inbox.</p>
+      </div>
+      <form onsubmit="return false;"><input type="email" placeholder="Your email address"><button type="submit">Send me the brief</button></form>
     </div>
-    <div class="letter">
-      <div class="q">"What if you find something I can't unfind?"</div>
-      <div class="a">Finding it early is the entire point. You don't get handed a number and left to Google it — you get a doctor and a written plan to address it. The trajectory is almost always reversible when it's caught now, not in five years.</div>
-    </div>
-  </div>
-
-  <div class="newsletter">
-    <div class="kicker">The Health Briefing</div>
-    <h3>The 5 numbers every 48-year-old man needs to know.</h3>
-    <p>A short, doctor-written brief on cardiovascular risk, visceral fat, testosterone, liver load and biological age — sent straight to your inbox.</p>
-    <form onsubmit="return false;">
-      <input type="email" placeholder="Your email address">
-      <button type="submit">Send me the brief</button>
-    </form>
-  </div>
-
+  </section>
 </main>
 
-<div class="finalcta">
-  <div class="eyebrow">Never Guess®</div>
-  <h2>Your next 12 months, written by a doctor.</h2>
-  <p>A GMC-registered doctor. A comprehensive test. A plan you'll actually follow.</p>
-  <button>Book your helfy® Test</button>
-  <div class="sub">Results in 5 days · Most health cash plans cover this</div>
+<div class="finalcta reveal">
+  <div class="inner wrap">
+    <div class="eyebrow">Never Guess®</div>
+    <h2>Your next 12 months, written by a doctor.</h2>
+    <p>A GMC-registered doctor. A comprehensive test. A plan you'll actually follow.</p>
+    <button class="btn-light">Book your helfy® Test</button>
+    <div class="sub">Results in 5 days · Most health cash plans cover this</div>
+  </div>
 </div>
 
 <footer>
-  <div class="disclaimer">helfy® provides health testing, doctor review and lifestyle planning. It is not a replacement for emergency care — if you are experiencing a medical emergency, call 999.</div>
-  © 2026 helfy®. All rights reserved.
+  <div class="wrap">
+    <div class="fmark">helfy®</div>
+    <div class="disclaimer">helfy® provides health testing, doctor review and lifestyle planning. It is not a replacement for emergency care — if you are experiencing a medical emergency, call 999.</div>
+    © 2026 helfy®. All rights reserved.
+  </div>
 </footer>
+
+<script>
+  // Scroll-reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+  },{threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+
+  // Sticky nav shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', ()=>{
+    navbar.classList.toggle('stuck', window.scrollY > 40);
+  });
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navlinks = document.getElementById('navlinks');
+  menuToggle.addEventListener('click', ()=>{
+    menuToggle.classList.toggle('open');
+    navlinks.classList.toggle('open');
+  });
+  navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+    menuToggle.classList.remove('open');
+    navlinks.classList.remove('open');
+  }));
+
+  // Count-up stat numbers
+  const counters = document.querySelectorAll('.statband .num');
+  const cio = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el = e.target;
+      const target = el.getAttribute('data-target');
+      const suffix = el.getAttribute('data-suffix') || '';
+      if(target === null){ cio.unobserve(el); return; }
+      const targetNum = parseInt(target,10);
+      let current = 0;
+      const step = Math.max(1, Math.round(targetNum/30));
+      const timer = setInterval(()=>{
+        current += step;
+        if(current >= targetNum){ current = targetNum; clearInterval(timer); }
+        el.textContent = current + suffix;
+      },30);
+      cio.unobserve(el);
+    });
+  },{threshold:0.4});
+  counters.forEach(el=>{ if(el.hasAttribute('data-target')) cio.observe(el); });
+</script>
 
 </body>
 </html>
