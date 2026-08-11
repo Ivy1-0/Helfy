@@ -322,7 +322,7 @@
         <div class="byline">By the <b>helfy® Clinical Team</b> · Reviewed by a GMC-registered physician · 6 min read</div>
         <div class="cta-row">
           <button class="btn-primary booking-trigger">Book your helfy® Test</button>
-          <button class="btn-secondary video-trigger" data-video="helfy.mp4">Watch the film ↓</button>
+          <button class="btn-secondary" id="watchFilmBtn">Watch the film ↓</button>
         </div>
       </div>
 
@@ -371,11 +371,12 @@
 
   <section class="block wrap" id="risk">
     <div class="video-card reveal">
-      <div class="video-frame">
+      <div class="video-frame" id="videoFrame">
         <div class="video-label">Watch</div>
         <div class="video-duration">2:14</div>
         <iframe 
-          src="https://streamable.com/e/yk43jz?autoplay=1&loop=1&muted=1" 
+          id="helfyVideo"
+          src="https://streamable.com/e/yk43jz?autoplay=0&loop=1&muted=1" 
           frameborder="0" 
           allowfullscreen 
           allow="autoplay; encrypted-media"
@@ -547,8 +548,8 @@
     <div class="newsletter reveal">
       <div>
         <div class="tagline">The Health Briefing</div>
-        <h3>The 5 numbers every 48-year-old man needs to know.</h3>
-        <p>A short, doctor-written brief on cardiovascular risk, visceral fat, testosterone, liver load and biological age — sent straight to your inbox.</p>
+        <h3>Know your numbers, own your health.</h3>
+        <p>A short, doctor-written brief on cardiovascular risk, visceral fat, metabolic health and biological age — sent straight to your inbox.</p>
       </div>
       <form onsubmit="return false;"><input type="email" placeholder="Your email address"><button type="submit">Send me the brief</button></form>
     </div>
@@ -631,6 +632,36 @@
       });
     });
 
+    // ---- WATCH FILM BUTTON ----
+    const watchBtn = document.getElementById('watchFilmBtn');
+    const videoSection = document.getElementById('risk');
+    const videoIframe = document.getElementById('helfyVideo');
+
+    watchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Scroll to video section
+      if (videoSection) {
+        videoSection.scrollIntoView({ behavior: 'smooth' });
+      }
+      // After a short delay, trigger autoplay on the iframe
+      setTimeout(() => {
+        if (videoIframe) {
+          // Reload the iframe with autoplay enabled
+          const src = videoIframe.getAttribute('src');
+          // If it doesn't already have autoplay=1, add it
+          if (src && !src.includes('autoplay=1')) {
+            const newSrc = src.replace('autoplay=0', 'autoplay=1');
+            videoIframe.setAttribute('src', newSrc);
+          } else if (src && src.includes('autoplay=0')) {
+            videoIframe.setAttribute('src', src.replace('autoplay=0', 'autoplay=1'));
+          } else {
+            // Fallback: just reload with autoplay
+            videoIframe.setAttribute('src', 'https://streamable.com/e/yk43jz?autoplay=1&loop=1&muted=1');
+          }
+        }
+      }, 600);
+    });
+
     // ---- BOOKING TRIGGER ----
     function handleBooking(message) {
       alert('🔬 helfy® booking initiated' + (message ? ' — ' + message : ''));
@@ -661,7 +692,7 @@
       }
     });
 
-    console.log('helfy® — video autoplay + loop, play button removed.');
+    console.log('helfy® — all issues fixed: watch film button now scrolls & plays video.');
   })();
 </script>
 
